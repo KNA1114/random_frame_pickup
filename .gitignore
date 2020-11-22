@@ -1,0 +1,6 @@
+*.mp4
+env/*
+__pycache__/*
+pickedImages/*
+!.gitkeep
+*.swp

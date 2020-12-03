@@ -2,6 +2,7 @@ import sys
 import cv2
 import random
 import os
+import pathlib
 
 def framenumGetter(video_path):
     cap = cv2.VideoCapture(video_path)
@@ -11,6 +12,7 @@ def framenumGetter(video_path):
 def save_frame(video_path, frame_num):
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
+        print('video capture can not open')
         sys.exit(1)
 
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num)
@@ -32,7 +34,12 @@ def randomPicker(video_path):
     frame_num = randomFramePickup(frame_total_num)
 
     ret, pickedFrame = save_frame(video_path, frame_num)
-    frame_save_path = save_path + '/' + video_path[:-4] + '_' + str(frame_num) + '.jpg'
+    p_video_path = pathlib.Path(video_path)
+
+    video_file_name = p_video_path.name
+
+    frame_save_path = save_path + '/' + video_file_name[:-4] + '_' + str(frame_num) + '.jpg'
+    print(frame_save_path)
     if ret:
         if not os.path.isfile(frame_save_path):
             # ダブらなければ保存
